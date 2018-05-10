@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 const Task = require('./../models/tasks');
 
 module.exports = {
-    index: // Show All Tasks
+    index: // Homepage
+        (req, res)=>{
+            res.render('index');
+        },
+    all: // Show All Tasks
         (req, res)=>{
             Task.find({}, (err, tasks)=>{
                 if(err){

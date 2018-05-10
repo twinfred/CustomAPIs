@@ -3,6 +3,7 @@ const app = express();
 const server = require('http').createServer(app);
 const bodyParser = require('body-parser');
 
+app.use(express.static(__dirname + '/AngularApp/dist/AngularApp'));
 app.use(bodyParser.json());
 
 require('./server/config/mongoose'); //DATABASE
