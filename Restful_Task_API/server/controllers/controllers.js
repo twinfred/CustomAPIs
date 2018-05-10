@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const Task = require('./../models/tasks');
 
 module.exports = {
-    // index: // Homepage
-    //     (req, res)=>{
-    //         res.render('index');
-    //     },
     all: // Show All Tasks
         (req, res)=>{
             Task.find({}, (err, tasks)=>{
@@ -22,7 +18,7 @@ module.exports = {
                 if(!task){
                     res.json({message: "Error.", error: "This task isn't in our database"});
                 }else{
-                    People.remove(person, (err)=>{
+                    Task.remove(task, (err)=>{
                         res.json({message: "Success.", data: task});
                     })
                 }
