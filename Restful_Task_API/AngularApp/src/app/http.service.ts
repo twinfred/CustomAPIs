@@ -15,9 +15,7 @@ export class HttpService {
     return this._http.get('/tasks');
   }
 
-  getFirstTask(){
-    let tempObservable = this._http.get('/tasks/5af382febce2140510e7fa6d');
-    tempObservable.subscribe(data => console.log("Got first task!", data));
-    return this._http.get('/tasks/5af382febce2140510e7fa6d');
+  getSpecificTask(id){
+    return this._http.get('/tasks/'+id);
   }
 }

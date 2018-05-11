@@ -18,9 +18,7 @@ module.exports = {
                 if(!task){
                     res.json({message: "Error.", error: "This task isn't in our database"});
                 }else{
-                    Task.remove(task, (err)=>{
-                        res.json({message: "Success.", data: task});
-                    })
+                    res.json({message: "Success.", data: task});
                 }
             })
         },

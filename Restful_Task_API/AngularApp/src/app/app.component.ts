@@ -7,17 +7,25 @@ import { HttpService } from './http.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = "app";
   tasks: string[];
+  taskSelect: string[];
   constructor(private _httpService: HttpService){}
-  ngOnInit(){
-    this.getAllTasksFromService();
-  }
+  // ngOnInit(){
+  //   this.getAllTasksFromService();
+  // }
   getAllTasksFromService(){
     let observable = this._httpService.getTasks();
     observable.subscribe((data)=>{
-      console.log(data["data"][0]["title"]);
       this.tasks = data["data"];
+      console.log(this.tasks)
+    })
+  }
+  getSpecificTaskFromService(id){
+    console.log(id)
+    let observable = this._httpService.getSpecificTask(id);
+    observable.subscribe((data)=>{
+      this.taskSelect = data["data"];
+      console.log("taskSelect:", this.taskSelect)
     })
   }
 }
