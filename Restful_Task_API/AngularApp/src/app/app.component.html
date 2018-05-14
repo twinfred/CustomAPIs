@@ -1,4 +1,11 @@
 <div style="text-align: center">
+  <h2>Add Task:</h2>
+  <form (submit)="addTask()">
+    <!-- <p> {{newTask | json }}</p> -->
+    <p>Title: <input type="text" name="newTask.title" [(ngModel)]="newTask.title"></p>
+    <p>Description: <input type="text" name="newTask.description" [(ngModel)]="newTask.description"></p>
+    <p><input type="submit" value="Add"></p>
+  </form>
   <button (click)="getAllTasksFromService()">Get All Tasks</button>
   <div *ngIf="tasks">
     <h2>Tasks:</h2>
@@ -7,8 +14,16 @@
       <button (click)="getSpecificTaskFromService(task._id)">Description</button>
     </div>
   </div>
-  <div *ngIf="taskSelect">
+  <div *ngIf="taskSelect._id">
     <h2>{{taskSelect.title}}</h2>
     <p>{{taskSelect.description}}</p>
+    <p style="font-weight: bold">Edit this task:</p>
+    <form (submit)="editTask(taskSelect._id)">
+      <!-- <p> {{taskSelect | json }}</p> -->
+      <p>Title: <input type="text" name="taskSelect.title" [(ngModel)]="taskSelect.title"></p>
+      <p>Description: <input type="text" name="taskSelect.description" [(ngModel)]="taskSelect.description"></p>
+      <p><input type="submit" value="Save Edit"></p>
+    </form>
+    <button (click)="deleteTask(taskSelect._id)">Delete This Task</button>
   </div>
 </div>

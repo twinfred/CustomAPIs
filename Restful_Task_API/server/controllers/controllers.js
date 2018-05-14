@@ -50,7 +50,7 @@ module.exports = {
         },
     del_task:
         (req, res)=>{
-            Task.findOne({name: req.params.name}, (err, task)=>{
+            Task.findOne({_id: req.params.id}, (err, task)=>{
                 if(!task){
                     res.json({message: "Error.", error: "This task isn't in our database"});
                 }else{

@@ -10,12 +10,22 @@ export class HttpService {
   constructor(private _http: HttpClient){  }
 
   getTasks(){
-    // let tempObservable = this._http.get('/tasks');
-    // tempObservable.subscribe(data => console.log("Got our tasks!", data));
     return this._http.get('/tasks');
   }
 
   getSpecificTask(id){
     return this._http.get('/tasks/'+id);
+  }
+
+  addTask(data){
+    return this._http.post('/tasks', data);
+  }
+
+  editTask(id, data){
+    return this._http.put('/tasks/'+id, data);
+  }
+
+  deleteTask(id){
+    return this._http.delete('/tasks/'+id);
   }
 }
