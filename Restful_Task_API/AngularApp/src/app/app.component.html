@@ -14,9 +14,8 @@
       <button (click)="getSpecificTaskFromService(task._id)">Description</button>
     </div>
   </div>
-  <div *ngIf="taskSelect._id">
-    <h2>{{taskSelect.title}}</h2>
-    <p>{{taskSelect.description}}</p>
+  <div *ngIf="taskSelect">
+    <app-task [taskToShow]='taskSelect'></app-task>
     <p style="font-weight: bold">Edit this task:</p>
     <form (submit)="editTask(taskSelect._id)">
       <!-- <p> {{taskSelect | json }}</p> -->

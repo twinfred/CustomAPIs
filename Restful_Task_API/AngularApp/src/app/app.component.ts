@@ -8,7 +8,7 @@ import { HttpService } from './http.service';
 })
 export class AppComponent implements OnInit {
   tasks: string[];
-  taskSelect: string[] = [];
+  taskSelect: any = false;
   newTask: any;
   constructor(private _httpService: HttpService){}
 
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     let observable = this._httpService.getTasks();
     observable.subscribe((data)=>{
       this.tasks = data["data"];
-      console.log(this.tasks)
+      console.log("TASKS:", this.tasks)
     })
   }
 
@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
     let observable = this._httpService.deleteTask(id);
     observable.subscribe(data => {
       console.log(data);
-      this.taskSelect = [];
+      this.taskSelect = false;
       this.getAllTasksFromService();
     })
   }

@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"text-align: center\">\n  <h2>Add Task:</h2>\n  <form (submit)=\"addTask()\">\n    <!-- <p> {{newTask | json }}</p> -->\n    <p>Title: <input type=\"text\" name=\"newTask.title\" [(ngModel)]=\"newTask.title\"></p>\n    <p>Description: <input type=\"text\" name=\"newTask.description\" [(ngModel)]=\"newTask.description\"></p>\n    <p><input type=\"submit\" value=\"Add\"></p>\n  </form>\n  <button (click)=\"getAllTasksFromService()\">Get All Tasks</button>\n  <div *ngIf=\"tasks\">\n    <h2>Tasks:</h2>\n    <div *ngFor=\"let task of tasks\">\n      <p>{{task.title}}</p>\n      <button (click)=\"getSpecificTaskFromService(task._id)\">Description</button>\n    </div>\n  </div>\n  <div *ngIf=\"taskSelect._id\">\n    <h2>{{taskSelect.title}}</h2>\n    <p>{{taskSelect.description}}</p>\n    <p style=\"font-weight: bold\">Edit this task:</p>\n    <form (submit)=\"editTask(taskSelect._id)\">\n      <!-- <p> {{taskSelect | json }}</p> -->\n      <p>Title: <input type=\"text\" name=\"taskSelect.title\" [(ngModel)]=\"taskSelect.title\"></p>\n      <p>Description: <input type=\"text\" name=\"taskSelect.description\" [(ngModel)]=\"taskSelect.description\"></p>\n      <p><input type=\"submit\" value=\"Save Edit\"></p>\n    </form>\n    <button (click)=\"deleteTask(taskSelect._id)\">Delete This Task</button>\n  </div>\n</div>"
+module.exports = "<div style=\"text-align: center\">\n  <h2>Add Task:</h2>\n  <form (submit)=\"addTask()\">\n    <!-- <p> {{newTask | json }}</p> -->\n    <p>Title: <input type=\"text\" name=\"newTask.title\" [(ngModel)]=\"newTask.title\"></p>\n    <p>Description: <input type=\"text\" name=\"newTask.description\" [(ngModel)]=\"newTask.description\"></p>\n    <p><input type=\"submit\" value=\"Add\"></p>\n  </form>\n  <button (click)=\"getAllTasksFromService()\">Get All Tasks</button>\n  <div *ngIf=\"tasks\">\n    <h2>Tasks:</h2>\n    <div *ngFor=\"let task of tasks\">\n      <p>{{task.title}}</p>\n      <button (click)=\"getSpecificTaskFromService(task._id)\">Description</button>\n    </div>\n  </div>\n  <div *ngIf=\"taskSelect\">\n    <app-task [taskToShow]='taskSelect'></app-task>\n    <p style=\"font-weight: bold\">Edit this task:</p>\n    <form (submit)=\"editTask(taskSelect._id)\">\n      <!-- <p> {{taskSelect | json }}</p> -->\n      <p>Title: <input type=\"text\" name=\"taskSelect.title\" [(ngModel)]=\"taskSelect.title\"></p>\n      <p>Description: <input type=\"text\" name=\"taskSelect.description\" [(ngModel)]=\"taskSelect.description\"></p>\n      <p><input type=\"submit\" value=\"Save Edit\"></p>\n    </form>\n    <button (click)=\"deleteTask(taskSelect._id)\">Delete This Task</button>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -71,7 +71,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var AppComponent = /** @class */ (function () {
     function AppComponent(_httpService) {
         this._httpService = _httpService;
-        this.taskSelect = [];
+        this.taskSelect = false;
     }
     AppComponent.prototype.ngOnInit = function () {
         this.newTask = { title: "", description: "" };
@@ -81,7 +81,7 @@ var AppComponent = /** @class */ (function () {
         var observable = this._httpService.getTasks();
         observable.subscribe(function (data) {
             _this.tasks = data["data"];
-            console.log(_this.tasks);
+            console.log("TASKS:", _this.tasks);
         });
     };
     AppComponent.prototype.getSpecificTaskFromService = function (id) {
@@ -120,7 +120,7 @@ var AppComponent = /** @class */ (function () {
         var observable = this._httpService.deleteTask(id);
         observable.subscribe(function (data) {
             console.log(data);
-            _this.taskSelect = [];
+            _this.taskSelect = false;
             _this.getAllTasksFromService();
         });
     };
@@ -155,6 +155,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _http_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./http.service */ "./src/app/http.service.ts");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _task_task_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./task/task.component */ "./src/app/task/task.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -167,13 +168,15 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]
+                _app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"],
+                _task_task_component__WEBPACK_IMPORTED_MODULE_6__["TaskComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -240,6 +243,73 @@ var HttpService = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], HttpService);
     return HttpService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/task/task.component.css":
+/*!*****************************************!*\
+  !*** ./src/app/task/task.component.css ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/task/task.component.html":
+/*!******************************************!*\
+  !*** ./src/app/task/task.component.html ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<h2>{{taskToShow.title}}</h2>\n<p>{{taskToShow.description}}</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/task/task.component.ts":
+/*!****************************************!*\
+  !*** ./src/app/task/task.component.ts ***!
+  \****************************************/
+/*! exports provided: TaskComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TaskComponent", function() { return TaskComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var TaskComponent = /** @class */ (function () {
+    function TaskComponent() {
+    }
+    TaskComponent.prototype.ngOnInit = function () {
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], TaskComponent.prototype, "taskToShow", void 0);
+    TaskComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-task',
+            template: __webpack_require__(/*! ./task.component.html */ "./src/app/task/task.component.html"),
+            styles: [__webpack_require__(/*! ./task.component.css */ "./src/app/task/task.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TaskComponent);
+    return TaskComponent;
 }());
 
 
